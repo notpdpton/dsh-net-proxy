@@ -32,20 +32,33 @@ SDK）。传给它的是一份**合成的环境对象**而不是 `process.env`�
 
 本插件是一个**单包插件**：一个包同时带 Host 半边与浏览器半边，没有额外的子包依赖。
 
-在 DSH 的插件页安装后，把 `dsh-net-proxy` 加入当前 profile 的 bundle 列表即可。
-源码开发时，把仓库链接进 profile：
+### 从 npm 安装
+
+```bash
+npm install @notpdpton/dsh-net-proxy
+```
+
+安装后在 DSH 的插件页把它加入当前 profile 的 bundle 列表（包名与 `package.json` 的
+`name` 一致），重启 DSH 生效。
+
+> 注意：npm 上的 `dsh-net-proxy`（无 scope）是**另一个人维护的另一个插件**，与本仓库无关。
+> 本插件的包名带 `@notpdpton/` scope，请勿混用。
+
+### 从源码安装
+
+把仓库链接进 profile，再把它加入 bundle 列表：
 
 ```jsonc
 // <profile>/package.json
 {
   "dependencies": {
-    "dsh-net-proxy": "link:../dsh-net-proxy"
+    "@notpdpton/dsh-net-proxy": "link:../dsh-net-proxy"
   },
   "dsh": {
     "profile": {
       "bundles": [
         // ...
-        "dsh-net-proxy"
+        "@notpdpton/dsh-net-proxy"
       ]
     }
   }
