@@ -54,16 +54,30 @@ await section('manifest', async () => {
     return
   }
   check('the package parses', true)
-  check('the package name is the expected one', manifest.name === 'dsh-net-proxy', manifest.name)
+  check('the package name is the expected one', manifest.name === '@notpdpton/dsh-net-proxy', manifest.name)
   check('the package is publishable, not private', manifest.private !== true)
   check('the package is ESM', manifest.type === 'module', manifest.type)
   check('the package declares a license', manifest.license === 'MIT', manifest.license)
   check('the package declares an icon', manifest.icon === './icon.svg', manifest.icon)
   check('the entry point is index.js', manifest.main === 'index.js', manifest.main)
 
-  for (const field of ['repository', 'homepage', 'author', 'bugs']) {
-    check(`the manifest invents no ${field}`, !(field in manifest), JSON.stringify(manifest[field]))
-  }
+  // A published package must point back at its own repository, so npm shows the right
+  // source link and `npm bugs` lands somewhere real. The earlier rule was the opposite —
+  // "invent no repository" — because the manifest predated a public home; now that the
+  // package is on npm, a MISSING repository is the defect.
+  check('the manifest points at its own repository',
+    manifest.repository?.url === 'git+https://github.com/notpdpton/dsh-net-proxy.git',
+    JSON.stringify(manifest.repository))
+  check('the manifest points at its own homepage',
+    manifest.homepage === 'https://github.com/notpdpton/dsh-net-proxy#readme',
+    String(manifest.homepage))
+  check('the manifest points at its own issue tracker',
+    manifest.bugs?.url === 'https://github.com/notpdpton/dsh-net-proxy/issues',
+    JSON.stringify(manifest.bugs))
+  check('the manifest names no author it cannot prove', !('author' in manifest), JSON.stringify(manifest.author))
+  // A scoped package is private by default; publishing one requires access=public.
+  check('the manifest publishes the scoped package publicly', manifest.publishConfig?.access === 'public',
+    JSON.stringify(manifest.publishConfig))
 
   check('the entry resolves through exports', manifest.exports?.['.'] === './index.js', JSON.stringify(manifest.exports?.['.']))
   check('the browser half is exported', manifest.exports?.['./client'] === './client.js', manifest.exports?.['./client'])
@@ -88,9 +102,9 @@ await section('manifest', async () => {
 await section('activation patch', async () => {
   const patch = await read('cordis.patch.yml')
   check('the patch inserts a row', /-\s*insert:/.test(patch))
-  check('the patch names the package', /name:\s*'?dsh-net-proxy'?/.test(patch))
+  check('the patch names the package', /name:\s*'?@notpdpton\/dsh-net-proxy'?/.test(patch))
   check('the patch row id is the package name', /id:\s*dsh-net-proxy\b/.test(patch))
-  check('the patch never names a subpath', !/name:\s*'?dsh-net-proxy\//.test(patch))
+  check('the patch never names a subpath', !/name:\s*'?@notpdpton\/dsh-net-proxy\//.test(patch))
   const ids = patch.match(/^\s*-\s*id:/gm) ?? []
   check('the patch inserts exactly one row', ids.length === 1, String(ids.length))
 })
@@ -108,7 +122,10 @@ await section('naming declaration', async () => {
 
   const host = await import(new URL('../index.js', import.meta.url).href)
   check('the declared plugin name is the exported one', (naming.names?.pluginNames ?? []).includes(host.name), `${(naming.names?.pluginNames ?? []).join(',')} vs ${host.name}`)
-  check('the declared loader id is the package name', (naming.names?.loaderIds ?? []).includes(manifest?.name))
+  // The loader id is the ROW id in cordis.patch.yml, not the package name: a scoped
+  // package's row keeps the short id so a profile patch can address it without the scope.
+  check('the declared loader id is the patch row id', (naming.names?.loaderIds ?? []).includes('dsh-net-proxy'),
+    (naming.names?.loaderIds ?? []).join(','))
   const route = (naming.names?.routes ?? []).find((entry) => entry.kind === 'exact')
   check('the declared route is the Host route', route?.path === host.ROUTE_PATH, `${route?.path} vs ${host.ROUTE_PATH}`)
   check('the declaration keeps every surface list, even empty ones',
@@ -161,8 +178,13 @@ await section('no identifiers from anywhere else', async () => {
 
   // The needles are assembled from fragments on purpose: written literally, this
   // file would match itself and the scan could never pass.
+  //
+  // WHAT THIS STILL GUARDS. The original rule was "no personal identifier anywhere", but
+  // the package is now published under an npm scope that IS the owner's handle, so that
+  // name legitimately appears in package.json, the client id and the docs. What must not
+  // appear is the OTHER kind of identifier: a machine account or a real name that leaked
+  // out of a local environment. Those two needles are still absolute.
   const needles = [
-    ['not', 'pdpton'].join(''),
     ['\u4e0d\u4e8c', '\u5e03\u4e01'].join(''),
     ['\u5149', '\u5b50'].join(''),
   ]
@@ -175,6 +197,16 @@ await section('no identifiers from anywhere else', async () => {
     }
   }
   check('no file carries a foreign identifier', offenders.length === 0, offenders.join(', '))
+  // The scope is the owner's handle and is expected; a LOCAL ABSOLUTE PATH is not. One
+  // would ship the author's home directory into the tarball, which is both noise and a
+  // small disclosure.
+  const leaked = []
+  for (const name of files) {
+    if (/\.(png|jpg|jpeg|gif|ico|woff2?|zip)$/i.test(name)) continue
+    const text = await readFile(new URL(name, root), 'utf8')
+    if (/[A-Za-z]:[\\/]Users[\\/]/.test(text)) leaked.push(name)
+  }
+  check('no file hard-codes a local absolute path', leaked.length === 0, leaked.join(', '))
   check('the repository has a readme', files.includes('README.md'))
   check('the repository carries a license', files.includes('LICENSE'))
 })

@@ -1,5 +1,5 @@
 /**
- * Browser half of 网络代理 (dsh-net-proxy).
+ * Browser half of 网络代理 (@notpdpton/dsh-net-proxy).
  *
  * This half OWNS its settings page: it registers a `settings.section` of its own,
  * draws that page's heading, and renders one responsive form inside it. Its styles
@@ -22,10 +22,10 @@
  * unchanged. Passwords are sent only to the credential store, never as settings,
  * never persisted in the browser, and never included in a status or probe label.
  *
- * @module dsh-net-proxy/client
+ * @module @notpdpton/dsh-net-proxy/client
  */
 window.__ModuleLoader__.load({
-  id: 'dsh-net-proxy',
+  id: '@notpdpton/dsh-net-proxy',
   factory(require) {
     const React = require('react')
     const { createElement: h, useEffect, useRef, useState } = React
@@ -40,7 +40,7 @@ window.__ModuleLoader__.load({
      * forgotten version bump into a red check instead of a stale number on the
      * page.
      */
-    const PACKAGE_ID = 'dsh-net-proxy'
+    const PACKAGE_ID = '@notpdpton/dsh-net-proxy'
     const PACKAGE_VERSION = '0.1.0'
     const ROUTE_PATH = '/net-proxy/state'
     const PASSWORD_REF = 'DSH_NET_PROXY_PASSWORD'

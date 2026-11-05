@@ -36,7 +36,7 @@ const client = captured.factory((id) => {
 })
 
 await section('module entry', () => {
-  check('the entry is registered under the package name', captured?.id === 'dsh-net-proxy', captured?.id)
+  check('the entry is registered under the package name', captured?.id === '@notpdpton/dsh-net-proxy', captured?.id)
   check('the factory is a function', typeof captured?.factory === 'function')
   check('the module exports apply()', typeof client.apply === 'function')
   check('the module declares its dependencies', Array.isArray(client.inject))
@@ -159,7 +159,7 @@ await section('page rendering', () => {
   const version = titleRow?.children?.[2]
   check('the heading is a level-2 title', heading?.type === 'h2', String(heading?.type))
   check('the heading carries the page title', heading?.children?.[0] === '网络代理', String(heading?.children?.[0]))
-  check('the heading states the package id', packageId?.children?.[0] === 'dsh-net-proxy', String(packageId?.children?.[0]))
+  check('the heading states the package id', packageId?.children?.[0] === '@notpdpton/dsh-net-proxy', String(packageId?.children?.[0]))
   check('the heading states the version', String(version?.children?.[0]).startsWith('v'), String(version?.children?.[0]))
   check('the version is explained on hover', typeof version?.props?.title === 'string' && version.props.title.length > 0)
   const description = head?.children?.[1]

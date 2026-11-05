@@ -1,4 +1,4 @@
-# dsh-net-proxy · 网络代理插件
+# @notpdpton/dsh-net-proxy · 网络代理插件
 
 让 **DSH 自身进程**的出站 HTTP(S) 走代理。
 
@@ -95,7 +95,7 @@ dsh-net-proxy/
 ├── index.js            Host 半边：策略解析、传输安装、HTTP 路由
 ├── client.js           浏览器半边：插件自己的设置页（settings.section）
 ├── cordis.patch.yml    自激活 patch（一行，名字即包名）
-├── package.json
+├── package.json        包名 @notpdpton/dsh-net-proxy
 ├── icon.svg            插件卡片图标
 ├── dsh-plugin.naming.json  公开标识声明
 ├── locale/             卡片标题与描述（zh / en）

@@ -1,6 +1,6 @@
 # 网络代理 · 设计说明
 
-`dsh-net-proxy` 让 **DSH 自身进程**的出站 HTTP(S) 走代理。
+`@notpdpton/dsh-net-proxy` 让 **DSH 自身进程**的出站 HTTP(S) 走代理。
 本插件**不向会话写入任何内容**。
 
 本文记录实现为什么长这样，尤其是几个无法从代码表面看出来的约束。
@@ -9,7 +9,8 @@
 
 | 项 | 值 |
 | --- | --- |
-| 包名 | `dsh-net-proxy` |
+| 包名 | `@notpdpton/dsh-net-proxy` |
+| Loader 行 id | `dsh-net-proxy` |
 | Host 插件名 | `netProxy` |
 | 浏览器半边 locale 命名空间 | `netProxy` |
 | Host 路由 | `/net-proxy/state` |

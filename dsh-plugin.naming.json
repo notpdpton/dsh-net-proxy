@@ -5,7 +5,7 @@
     "namespace": "netproxy",
     "name": "net-proxy",
     "coordinate": "netproxy/net-proxy",
-    "packageName": "dsh-net-proxy"
+    "packageName": "@notpdpton/dsh-net-proxy"
   },
   "names": {
     "pluginNames": [

@@ -1,5 +1,5 @@
 /**
- * Host half of 网络代理 (dsh-net-proxy).
+ * Host half of 网络代理 (@notpdpton/dsh-net-proxy).
  *
  * Routes THIS Host process's outbound HTTP(S) through a proxy and tells the model
  * that the proxy exists. Three things make the implementation what it is:
@@ -33,7 +33,7 @@
  * no `Config`: a schema would need schemastery. Settings live in the profile's
  * `net-proxy.json`, written through this component's own RPC channel.
  *
- * @module dsh-net-proxy
+ * @module @notpdpton/dsh-net-proxy
  */
 
 import { execFile } from 'node:child_process'

@@ -10,4 +10,4 @@
 # would load with no settings page attached.
 - insert:
     - id: dsh-net-proxy
-      name: 'dsh-net-proxy'
+      name: '@notpdpton/dsh-net-proxy'

@@ -1,5 +1,5 @@
 {
-  "name": "dsh-net-proxy",
+  "name": "@notpdpton/dsh-net-proxy",
   "version": "0.1.0",
   "type": "module",
   "description": "让 DSH 自身的网络请求走代理。",
@@ -12,6 +12,18 @@
     "network"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/notpdpton/dsh-net-proxy.git"
+  },
+  "homepage": "https://github.com/notpdpton/dsh-net-proxy#readme",
+  "bugs": {
+    "url": "https://github.com/notpdpton/dsh-net-proxy/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "index.js",
   "exports": {
     ".": "./index.js",
