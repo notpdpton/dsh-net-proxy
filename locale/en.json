@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Network proxy",
+    "description": "Routes DSH's own network requests through a proxy."
+  }
+}

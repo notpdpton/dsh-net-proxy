@@ -1,0 +1,13 @@
+# Self-activation patch for a STANDALONE plugin.
+#
+# This package is one plugin: one package, one row, one component. When a profile
+# mounts this row, the Loader imports the package entry and then reads `dsh.client`
+# from the same package.json to find the browser module.
+#
+# The row names the PACKAGE ROOT and nothing else. A row naming a subpath (for
+# example dsh-net-proxy/client) never reaches the browser-module scan at all —
+# dsh-client-modules requires an exact package specifier there — so the Host half
+# would load with no settings page attached.
+- insert:
+    - id: dsh-net-proxy
+      name: 'dsh-net-proxy'

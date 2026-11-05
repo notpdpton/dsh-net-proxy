@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "policy": "dsh-plugin-naming/v1",
+  "plugin": {
+    "namespace": "netproxy",
+    "name": "net-proxy",
+    "coordinate": "netproxy/net-proxy",
+    "packageName": "dsh-net-proxy"
+  },
+  "names": {
+    "pluginNames": [
+      "netProxy"
+    ],
+    "loaderIds": [
+      "dsh-net-proxy"
+    ],
+    "services": [],
+    "tools": [],
+    "commands": [],
+    "skills": [],
+    "skillProviders": [],
+    "events": [],
+    "settingsNamespaces": [],
+    "routes": [
+      {
+        "kind": "exact",
+        "path": "/net-proxy/state"
+      }
+    ]
+  }
+}

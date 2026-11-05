@@ -1,0 +1,11 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="7.4" y="7.4" width="21.2" height="21.2" rx="6" stroke="url(#npd-proxy-frame)" stroke-width="2.2"/>
+  <path d="M12.2 14.6H22.4M19.7 12.1L22.4 14.6L19.7 17.1" stroke="#45D9E7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M23.8 21.4H13.6M16.3 18.9L13.6 21.4L16.3 23.9" stroke="#67C7FE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <linearGradient id="npd-proxy-frame" x1="7.4" y1="7.4" x2="28.6" y2="28.6" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7AC2FF"/>
+      <stop offset="1" stop-color="#4A65E8"/>
+    </linearGradient>
+  </defs>
+</svg>
